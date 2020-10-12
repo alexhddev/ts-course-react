@@ -3,13 +3,11 @@ import { Login } from './login';
 import { LoginService } from './services/LoginService';
 import * as ReactDOM from 'react-dom';
 import React from 'react';
-import { fireEvent, queryByText } from '@testing-library/react';
 
 
 describe('Login component tests', () => {
 
     let container: HTMLDivElement
-    const loginServiceSpy = jest.spyOn(LoginService.prototype, 'login');
 
     beforeEach(() => {
         container = document.createElement('div');
