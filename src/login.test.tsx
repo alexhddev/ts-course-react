@@ -1,6 +1,7 @@
 
 import { Login } from './login';
 import { LoginService } from './services/LoginService';
+jest.mock('./services/LoginService');
 import * as ReactDOM from 'react-dom';
 import React from 'react';
 import { fireEvent, waitForElement } from '@testing-library/react';
@@ -62,7 +63,7 @@ describe('Login component tests', () => {
         expect(statusLabel).toBeInTheDocument();
         expect(statusLabel).toHaveTextContent('Login failed');
     });
-    it('Renders correctly status label - invalid login', async () => {
+    it('Renders correctly status label - valid login', async () => {
         loginServiceSpy.mockResolvedValueOnce(true);
         const inputs = container.querySelectorAll('input');
         const loginButton = inputs[2];
