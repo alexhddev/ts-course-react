@@ -3,7 +3,7 @@ import { Login } from './login';
 import { LoginService } from './services/LoginService';
 import * as ReactDOM from 'react-dom';
 import React from 'react';
-import { fireEvent } from '@testing-library/react';
+import { fireEvent, waitForElement } from '@testing-library/react';
 
 
 describe('Login component tests', () => {
@@ -50,6 +50,28 @@ describe('Login component tests', () => {
         fireEvent.change(passwordInput, { target: { value: 'somePass' } });
         fireEvent.click(loginButton);
         expect(loginServiceSpy).toBeCalledWith('someUser', 'somePass');
+    });
+    it('Renders correctly status label - invalid login', async () => {
+        loginServiceSpy.mockResolvedValueOnce(false);
+        const inputs = container.querySelectorAll('input');
+        const loginButton = inputs[2];
+        fireEvent.click(loginButton);
+        const statusLabel = await waitForElement(() =>
+            container.querySelector('label')
+        );
+        expect(statusLabel).toBeInTheDocument();
+        expect(statusLabel).toHaveTextContent('Login failed');
+    });
+    it('Renders correctly status label - invalid login', async () => {
+        loginServiceSpy.mockResolvedValueOnce(true);
+        const inputs = container.querySelectorAll('input');
+        const loginButton = inputs[2];
+        fireEvent.click(loginButton);
+        const statusLabel = await waitForElement(() =>
+            container.querySelector('label')
+        );
+        expect(statusLabel).toBeInTheDocument();
+        expect(statusLabel).toHaveTextContent('Login successful');
     });
 
 
