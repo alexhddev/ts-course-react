@@ -25,6 +25,7 @@ export class Login extends React.Component<{}, CredentialsState> {
 
     private async handleSubmit(event: React.SyntheticEvent) {
         event.preventDefault();
+        console.log('Click!!!!');
         const loginResponse = await this.loginService.login(
             this.state.userName,
             this.state.password
